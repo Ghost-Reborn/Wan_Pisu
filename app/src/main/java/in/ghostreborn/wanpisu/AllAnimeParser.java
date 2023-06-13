@@ -11,12 +11,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class AllAnimeParser {
 
-    public static String getAllAnimeJSON(String allAnimeURL){
-        try{
+    private static String getAllAnimeJSON(String allAnimeURL) {
+        try {
             URL url = new URL(allAnimeURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -24,12 +23,13 @@ public class AllAnimeParser {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
 
-            return parseAllAnime(response.toString());
+            return response.toString();
+
         } catch (MalformedURLException | ProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -37,28 +37,32 @@ public class AllAnimeParser {
         }
 
         return "ERROR";
-
     }
 
-    public static String parseAllAnime(String JSON){
-        StringBuilder parsed = new StringBuilder();
-        try{
+    public static void parseAllAnime(String allAnimeURL) {
+
+        String JSON = getAllAnimeJSON(allAnimeURL);
+
+        try {
             JSONObject allAnimeBaseJSON = new JSONObject(JSON);
             JSONArray edgesArray = allAnimeBaseJSON
                     .getJSONObject("data")
                     .getJSONObject("shows")
                     .getJSONArray("edges");
-            for (int i=0;i<edgesArray.length();i++){
+            for (int i = 0; i < edgesArray.length(); i++) {
                 JSONObject animeObject = edgesArray.optJSONObject(i);
                 String animeName = animeObject.getString("name");
-                parsed.append(animeName);
-                parsed.append("\n\n");
+                String animeThumbnail = animeObject.getString("thumbnail");
+                WanPisuConstants.allAnimes.add(
+                        new AllAnime(
+                                animeName,
+                                animeThumbnail
+                        )
+                );
             }
-            return parsed.toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return "ERROR";
     }
 
 }
