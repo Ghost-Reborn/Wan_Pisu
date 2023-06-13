@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         testText = findViewById(R.id.test_text);
+        WanPisuConstants.allAnimes = new ArrayList<>();
         AllAnimeAsync animeAsync = new AllAnimeAsync();
         animeAsync.execute();
 
@@ -32,39 +34,15 @@ class AllAnimeAsync extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-        return getJSONData();
+        return AllAnimeParser.getAllAnimeJSON(
+                WanPisuConstants.ALL_ANIME_QUERY_HEAD +
+                        WanPisuConstants.ALL_ANIME_QUERY_TAIL
+        );
     }
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         MainActivity.testText.setText(s);
-    }
-
-    private String getJSONData(){
-        try{
-            URL url = new URL(
-                    WanPisuConstants.ALL_ANIME_QUERY_HEAD +
-                            WanPisuConstants.ALL_ANIME_QUERY_TAIL
-            );
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-
-            return response.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "ERROR";
-
     }
 }
