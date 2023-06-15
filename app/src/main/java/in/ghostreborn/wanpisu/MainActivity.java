@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
             allAnimeContainer.setLayoutManager(gridLayoutManager);
             AllAnimeAdapter adapter = new AllAnimeAdapter();
             allAnimeContainer.setAdapter(adapter);
