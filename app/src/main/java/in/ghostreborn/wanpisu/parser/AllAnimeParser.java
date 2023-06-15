@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.parser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +11,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+
+import in.ghostreborn.wanpisu.model.AllAnime;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class AllAnimeParser {
 

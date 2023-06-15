@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.parser.AllAnimeParser;
+
 public class MainActivity extends AppCompatActivity {
 
     static TextView testText;
@@ -23,19 +26,20 @@ public class MainActivity extends AppCompatActivity {
         animeAsync.execute();
 
     }
-}
 
-class AllAnimeAsync extends AsyncTask<Void, Void, Void> {
+    class AllAnimeAsync extends AsyncTask<Void, Void, Void> {
 
-    @Override
-    protected Void doInBackground(Void... voids) {
-        AllAnimeParser.parseAllAnime(WanPisuConstants.ALL_ANIME_QUERY_HEAD + WanPisuConstants.ALL_ANIME_QUERY_TAIL);
-        return null;
+        @Override
+        protected Void doInBackground(Void... voids) {
+            AllAnimeParser.parseAllAnime(WanPisuConstants.ALL_ANIME_QUERY_HEAD + WanPisuConstants.ALL_ANIME_QUERY_TAIL);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void s) {
+            super.onPostExecute(s);
+            MainActivity.testText.setText(WanPisuConstants.allAnimes.get(0).getAnimeName());
+        }
     }
 
-    @Override
-    protected void onPostExecute(Void s) {
-        super.onPostExecute(s);
-        MainActivity.testText.setText(WanPisuConstants.allAnimes.get(0).animeName);
-    }
 }
