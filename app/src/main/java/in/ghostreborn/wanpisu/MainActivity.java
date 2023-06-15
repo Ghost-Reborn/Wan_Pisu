@@ -5,22 +5,25 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.adapter.AllAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnimeParser;
 
 public class MainActivity extends AppCompatActivity {
 
-    static TextView testText;
+    static RecyclerView allAnimeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testText = findViewById(R.id.test_text);
+        allAnimeContainer = findViewById(R.id.all_anime_container);
         WanPisuConstants.allAnimes = new ArrayList<>();
         AllAnimeAsync animeAsync = new AllAnimeAsync();
         animeAsync.execute();
@@ -38,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
-            MainActivity.testText.setText(WanPisuConstants.allAnimes.get(0).getAnimeName());
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+            allAnimeContainer.setLayoutManager(gridLayoutManager);
+            AllAnimeAdapter adapter = new AllAnimeAdapter();
+            allAnimeContainer.setAdapter(adapter);
         }
     }
 
