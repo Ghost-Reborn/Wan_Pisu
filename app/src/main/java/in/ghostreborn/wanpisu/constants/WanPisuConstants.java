@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.model.AllAnime;
+import in.ghostreborn.wanpisu.model.Jikan;
 
 public class WanPisuConstants {
 
@@ -14,6 +15,9 @@ public class WanPisuConstants {
     public static final String JIKAN_EPISODES_URL_TAIL = "/episodes";
 
     public static ArrayList<AllAnime> allAnimes;
+    public static ArrayList<Jikan> jikans;
+
+    public static boolean hasNoEpisodeData = false;
 
     public static final String WAN_PISU_PREFERENCE = "WAN_PISU";
     public static final String WAN_PISU_PREFERENCE_ANIME_ID = "ANIME_ID";
