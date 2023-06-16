@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -22,6 +21,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnimeParser;
 
@@ -94,6 +94,8 @@ public class ExoPlayerActivity extends AppCompatActivity {
             return AllAnimeParser.getAllAnimeServer(
                     WanPisuConstants.ALL_ANIME_SERVER_HEAD +
                             WanPisuConstants.wanPisuSharedPreference.getString(WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID, "") +
+                            WanPisuConstants.ALL_ANIME_SERVER_MIDDLE +
+                            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER +
                             WanPisuConstants.ALL_ANIME_SERVER_TAIL
             );
         }

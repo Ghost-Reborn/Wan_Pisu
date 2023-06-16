@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.ExoPlayerActivity;
+import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Jikan;
@@ -40,6 +40,7 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
         holder.jikanAnimeRecap.setText("Recap: " + jikans.get(position).isAnimeRecap() + "");
 
         holder.itemView.setOnClickListener(view -> {
+            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = position + 1;
             holder.itemView.getContext()
                     .startActivity(
                             new Intent(
