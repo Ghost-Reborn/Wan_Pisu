@@ -14,8 +14,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import in.ghostreborn.wanpisu.model.AllAnime;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.AllAnime;
 
 public class AllAnimeParser {
 
@@ -101,7 +101,7 @@ public class AllAnimeParser {
                 response.append(line);
             }
 
-            return response.toString();
+            return getBackupServer(response.toString());
 
         } catch (MalformedURLException | ProtocolException e) {
             e.printStackTrace();
@@ -110,6 +110,27 @@ public class AllAnimeParser {
         }
 
         return "ERROR";
+    }
+
+    private static String getBackupServer(String serverJSON) {
+        try {
+            JSONObject baseJSON = new JSONObject(serverJSON);
+            JSONArray sourceURLS = baseJSON
+                    .optJSONObject("data")
+                    .optJSONObject("episode")
+                    .getJSONArray("sourceUrls");
+            for (int i = 0; i < sourceURLS.length(); i++) {
+                if (sourceURLS.get(i).toString().contains("workfields.backup-server")){
+                    JSONObject urlObject = sourceURLS.getJSONObject(i);
+                    return urlObject.getString("sourceUrl");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "ERROR";
+
     }
 
 }
