@@ -31,6 +31,7 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
         Picasso.get().load(WanPisuConstants.allAnimes.get(position).getAnimeThumbnail())
                         .into(holder.animeImageView);
         holder.itemView.setOnClickListener(view -> {
+            WanPisuConstants.ALL_ANIME_TOTAL_EPISODES = Integer.parseInt(WanPisuConstants.allAnimes.get(position).getAnimeAvailableEpisodes());
             WanPisuConstants.wanPisuSharedPreference.edit()
                     .putString(
                             WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID,

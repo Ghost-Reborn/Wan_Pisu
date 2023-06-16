@@ -12,12 +12,14 @@ import android.widget.TextView;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AllAnimeAdapter;
 import in.ghostreborn.wanpisu.adapter.JikanAdapter;
+import in.ghostreborn.wanpisu.adapter.JikanGroupAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.JikanParser;
 
 public class EpisodeSelectActivity extends AppCompatActivity {
 
     RecyclerView jikanContainer;
+    RecyclerView jikanGroupContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class EpisodeSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_episode_select);
 
         jikanContainer = findViewById(R.id.jikan_container);
+        jikanGroupContainer = findViewById(R.id.jikan_group_container);
 
         JikanAsync async = new JikanAsync();
         async.execute();
@@ -46,10 +49,17 @@ public class EpisodeSelectActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void s) {
             super.onPostExecute(s);
+
             LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
-            jikanContainer.setLayoutManager(manager);
+            GridLayoutManager groupManager = new GridLayoutManager(getApplicationContext(), 1);
+            groupManager.setOrientation(GridLayoutManager.HORIZONTAL);
             JikanAdapter adapter = new JikanAdapter();
+            JikanGroupAdapter groupAdapter = new JikanGroupAdapter(WanPisuConstants.ALL_ANIME_TOTAL_EPISODES);
+
+            jikanContainer.setLayoutManager(manager);
+            jikanGroupContainer.setLayoutManager(groupManager);
             jikanContainer.setAdapter(adapter);
+            jikanGroupContainer.setAdapter(groupAdapter);
         }
     }
 

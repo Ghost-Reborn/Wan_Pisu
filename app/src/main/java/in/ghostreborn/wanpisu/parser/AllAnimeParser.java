@@ -58,7 +58,8 @@ public class AllAnimeParser {
                 JSONObject animeObject = edgesArray.optJSONObject(i);
                 String animeID = animeObject.getString("_id");
                 String animeName = animeObject.getString("name");
-                String availableEpisodes = animeObject.getString("availableEpisodes");
+                String availableEpisodes = animeObject.optJSONObject("availableEpisodes")
+                        .getString("sub");
                 String type = animeObject.getString("__typename");
                 String malID = animeObject.getString("malId");
                 String animeThumbnail = animeObject.getString("thumbnail");

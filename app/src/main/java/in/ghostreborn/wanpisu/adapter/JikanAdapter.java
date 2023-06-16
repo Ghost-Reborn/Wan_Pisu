@@ -1,6 +1,7 @@
 package in.ghostreborn.wanpisu.adapter;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
 
         holder.itemView.setOnClickListener(view -> {
             WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = position + 1;
+            Log.e("EPISODES", "TOTAL EPISODES: " + WanPisuConstants.ALL_ANIME_TOTAL_EPISODES);
             holder.itemView.getContext()
                     .startActivity(
                             new Intent(
