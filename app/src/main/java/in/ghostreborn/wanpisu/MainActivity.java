@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         allAnimeContainer = findViewById(R.id.all_anime_container);
-        WanPisuConstants.allAnimes = new ArrayList<>();
+
+        initialSetup();
+
         AllAnimeAsync animeAsync = new AllAnimeAsync();
         animeAsync.execute();
 
@@ -46,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
             AllAnimeAdapter adapter = new AllAnimeAdapter();
             allAnimeContainer.setAdapter(adapter);
         }
+    }
+
+    private void initialSetup(){
+        WanPisuConstants.allAnimes = new ArrayList<>();
+        WanPisuConstants.wanPisuSharedPreference = getSharedPreferences(
+                WanPisuConstants.WAN_PISU_PREFERENCE,
+                MODE_PRIVATE
+        );
     }
 
 }

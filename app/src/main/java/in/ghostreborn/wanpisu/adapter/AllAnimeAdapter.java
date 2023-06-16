@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +29,13 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
         holder.animeTextView.setText(WanPisuConstants.allAnimes.get(position).getAnimeName());
         Picasso.get().load(WanPisuConstants.allAnimes.get(position).getAnimeThumbnail())
                         .into(holder.animeImageView);
+        holder.itemView.setOnClickListener(view -> {
+            WanPisuConstants.wanPisuSharedPreference.edit()
+                    .putString(
+                            WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID,
+                            WanPisuConstants.allAnimes.get(position).getAnimeID()
+                    ).apply();
+        });
     }
 
     @Override

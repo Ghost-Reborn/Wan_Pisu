@@ -54,12 +54,28 @@ public class AllAnimeParser {
                     .getJSONArray("edges");
             for (int i = 0; i < edgesArray.length(); i++) {
                 JSONObject animeObject = edgesArray.optJSONObject(i);
+                String animeID = animeObject.getString("_id");
                 String animeName = animeObject.getString("name");
+                String availableEpisodes = animeObject.getString("availableEpisodes");
+                String type = animeObject.getString("__typename");
+                String malID = animeObject.getString("malId");
                 String animeThumbnail = animeObject.getString("thumbnail");
+                String lastEpisodeInfo = animeObject.optJSONObject("lastEpisodeInfo")
+                        .optJSONObject("sub")
+                        .getString("episodeString");
+                String lastEpisodeYear = animeObject.optJSONObject("lastEpisodeDate")
+                        .optJSONObject("sub")
+                        .getString("year");
                 WanPisuConstants.allAnimes.add(
                         new AllAnime(
+                                animeID,
                                 animeName,
-                                animeThumbnail
+                                availableEpisodes,
+                                type,
+                                malID,
+                                animeThumbnail,
+                                lastEpisodeInfo,
+                                lastEpisodeYear
                         )
                 );
             }
