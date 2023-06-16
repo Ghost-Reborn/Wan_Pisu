@@ -1,5 +1,6 @@
 package in.ghostreborn.wanpisu.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import in.ghostreborn.wanpisu.EpisodeSelectActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
@@ -35,6 +37,12 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
                             WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID,
                             WanPisuConstants.allAnimes.get(position).getAnimeID()
                     ).apply();
+            holder.itemView.getContext().startActivity(
+                    new Intent(
+                            holder.itemView.getContext(),
+                            EpisodeSelectActivity.class
+                    )
+            );
         });
     }
 
