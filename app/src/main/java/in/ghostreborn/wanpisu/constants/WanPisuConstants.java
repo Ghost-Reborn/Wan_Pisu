@@ -20,7 +20,9 @@ public class WanPisuConstants {
     public static ArrayList<Jikan> jikans;
 
     public static boolean hasNoEpisodeData = false;
+    public static boolean isHLS = false;
     public static int ALL_ANIME_POSITION = 0;
+    public static int ALL_ANIME_EPISODE_NUMBER = 0;
 
     public static final String WAN_PISU_PREFERENCE = "WAN_PISU";
     public static final String WAN_PISU_PREFERENCE_ANIME_ID = "ANIME_ID";

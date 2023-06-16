@@ -47,6 +47,7 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
                                     ExoPlayerActivity.class
                             )
                     );
+
         });
 
     }
