@@ -29,13 +29,13 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull JikanAdapter.ViewHolder holder, int position) {
         Picasso.get().load(WanPisuConstants.allAnimes.get(WanPisuConstants.ALL_ANIME_POSITION).getAnimeThumbnail())
-                        .into(holder.jikanAnimeImage);
+                .into(holder.jikanAnimeImage);
         ArrayList<Jikan> jikans = WanPisuConstants.jikans;
         holder.jikanAnimeName.setText(jikans.get(position).getAnimeTitle());
-        holder.jikanAnimeScore.setText(jikans.get(position).getAnimeScore());
-        holder.jikanAnimeAired.setText(jikans.get(position).getAnimeAired());
-        holder.jikanAnimeFiller.setText(jikans.get(position).isAnimeFiller() + "");
-        holder.jikanAnimeRecap.setText(jikans.get(position).isAnimeRecap() + "");
+        holder.jikanAnimeScore.setText("Rating: " + jikans.get(position).getAnimeScore());
+        holder.jikanAnimeAired.setText("Aired: " + jikans.get(position).getAnimeAired());
+        holder.jikanAnimeFiller.setText("Filler: " + jikans.get(position).isAnimeFiller() + "");
+        holder.jikanAnimeRecap.setText("Recap: " + jikans.get(position).isAnimeRecap() + "");
     }
 
     @Override
