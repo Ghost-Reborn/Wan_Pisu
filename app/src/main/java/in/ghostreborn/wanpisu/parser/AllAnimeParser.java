@@ -87,4 +87,29 @@ public class AllAnimeParser {
         }
     }
 
+    public static String getAllAnimeServer(String serverURL) {
+        try {
+            URL url = new URL(serverURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            return response.toString();
+
+        } catch (MalformedURLException | ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "ERROR";
+    }
+
 }

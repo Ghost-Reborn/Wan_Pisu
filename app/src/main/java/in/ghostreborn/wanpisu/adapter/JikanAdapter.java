@@ -1,5 +1,6 @@
 package in.ghostreborn.wanpisu.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.ExoPlayerActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Jikan;
@@ -36,6 +38,17 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
         holder.jikanAnimeAired.setText("Aired: " + jikans.get(position).getAnimeAired());
         holder.jikanAnimeFiller.setText("Filler: " + jikans.get(position).isAnimeFiller() + "");
         holder.jikanAnimeRecap.setText("Recap: " + jikans.get(position).isAnimeRecap() + "");
+
+        holder.itemView.setOnClickListener(view -> {
+            holder.itemView.getContext()
+                    .startActivity(
+                            new Intent(
+                                    holder.itemView.getContext(),
+                                    ExoPlayerActivity.class
+                            )
+                    );
+        });
+
     }
 
     @Override
