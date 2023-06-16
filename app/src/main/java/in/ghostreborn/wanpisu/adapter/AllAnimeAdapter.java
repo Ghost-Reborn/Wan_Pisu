@@ -41,6 +41,7 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
                             WanPisuConstants.allAnimes.get(position).getAnimeMalID()
                     )
                     .apply();
+            WanPisuConstants.ALL_ANIME_POSITION = position;
             holder.itemView.getContext().startActivity(
                     new Intent(
                             holder.itemView.getContext(),
@@ -61,8 +62,8 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
         public ImageView animeImageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            animeTextView = itemView.findViewById(R.id.all_anime_name);
-            animeImageView = itemView.findViewById(R.id.all_anime_image);
+            animeTextView = itemView.findViewById(R.id.jikan_anime_name);
+            animeImageView = itemView.findViewById(R.id.jikan_anime_image);
         }
     }
 }

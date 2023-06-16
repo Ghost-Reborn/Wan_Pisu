@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/all_anime_image"
+            android:id="@+id/jikan_anime_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -28,7 +28,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/all_anime_name"
+        android:id="@+id/jikan_anime_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
