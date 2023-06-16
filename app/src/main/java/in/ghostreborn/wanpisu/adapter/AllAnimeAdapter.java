@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import in.ghostreborn.wanpisu.EpisodeSelectActivity;
+import in.ghostreborn.wanpisu.ui.EpisodeSelectActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
@@ -36,7 +35,12 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
                     .putString(
                             WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID,
                             WanPisuConstants.allAnimes.get(position).getAnimeID()
-                    ).apply();
+                    )
+                    .putString(
+                            WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_MAL_ID,
+                            WanPisuConstants.allAnimes.get(position).getAnimeMalID()
+                    )
+                    .apply();
             holder.itemView.getContext().startActivity(
                     new Intent(
                             holder.itemView.getContext(),

@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +68,7 @@ public class AllAnimeParser {
                 String lastEpisodeYear = animeObject.optJSONObject("lastEpisodeDate")
                         .optJSONObject("sub")
                         .getString("year");
+                Log.e("MAL_ID", "ANIME_NAME: " + animeName + "\tMAL_ID: " + malID);
                 WanPisuConstants.allAnimes.add(
                         new AllAnime(
                                 animeID,
