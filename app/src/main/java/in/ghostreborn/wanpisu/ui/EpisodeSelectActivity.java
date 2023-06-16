@@ -54,7 +54,7 @@ public class EpisodeSelectActivity extends AppCompatActivity {
             GridLayoutManager groupManager = new GridLayoutManager(getApplicationContext(), 1);
             groupManager.setOrientation(GridLayoutManager.HORIZONTAL);
             JikanAdapter adapter = new JikanAdapter();
-            JikanGroupAdapter groupAdapter = new JikanGroupAdapter(WanPisuConstants.ALL_ANIME_TOTAL_EPISODES);
+            JikanGroupAdapter groupAdapter = new JikanGroupAdapter();
 
             jikanContainer.setLayoutManager(manager);
             jikanGroupContainer.setLayoutManager(groupManager);

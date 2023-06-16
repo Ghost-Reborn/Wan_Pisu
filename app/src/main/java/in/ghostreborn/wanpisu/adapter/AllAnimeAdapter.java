@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import in.ghostreborn.wanpisu.ui.EpisodeSelectActivity;
+import java.util.ArrayList;
+
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.ui.EpisodeSelectActivity;
 
 public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHolder> {
     @NonNull
@@ -29,8 +31,9 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
     public void onBindViewHolder(@NonNull AllAnimeAdapter.ViewHolder holder, int position) {
         holder.animeTextView.setText(WanPisuConstants.allAnimes.get(position).getAnimeName());
         Picasso.get().load(WanPisuConstants.allAnimes.get(position).getAnimeThumbnail())
-                        .into(holder.animeImageView);
+                .into(holder.animeImageView);
         holder.itemView.setOnClickListener(view -> {
+
             WanPisuConstants.ALL_ANIME_TOTAL_EPISODES = Integer.parseInt(WanPisuConstants.allAnimes.get(position).getAnimeAvailableEpisodes());
             WanPisuConstants.wanPisuSharedPreference.edit()
                     .putString(
@@ -43,6 +46,15 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
                     )
                     .apply();
             WanPisuConstants.ALL_ANIME_POSITION = position;
+
+            setupJikanEpisodes(Integer.parseInt(
+                    WanPisuConstants
+                            .allAnimes
+                            .get(position)
+                            .getAnimeAvailableEpisodes()
+                    )
+            );
+
             holder.itemView.getContext().startActivity(
                     new Intent(
                             holder.itemView.getContext(),
@@ -57,14 +69,37 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
         return WanPisuConstants.allAnimes.size();
     }
 
+    private void setupJikanEpisodes(int lastEpisode) {
+        WanPisuConstants.jikanEpisodes = new ArrayList<>();
+
+        int startEpisode = 1;
+        double total = Math.floor(lastEpisode / 100);
+        double remainingEpisodes = total % 100;
+        if (remainingEpisodes != 0) {
+            total += 1;
+        }
+
+        for (int i = 1; i <= total; i++) {
+            if (i != total) {
+                WanPisuConstants.jikanEpisodes.add(startEpisode + "-" + (startEpisode + 99));
+            } else {
+                WanPisuConstants.jikanEpisodes.add(startEpisode + "-" + lastEpisode);
+            }
+            startEpisode += 100;
+        }
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView animeTextView;
         public ImageView animeImageView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             animeTextView = itemView.findViewById(R.id.jikan_anime_name);
             animeImageView = itemView.findViewById(R.id.jikan_anime_image);
         }
     }
+
 }

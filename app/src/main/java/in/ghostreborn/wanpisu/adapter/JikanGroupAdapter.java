@@ -9,22 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class JikanGroupAdapter extends RecyclerView.Adapter<JikanGroupAdapter.ViewHolder> {
-
-    int startEpisode = 1;
-    int lastEpisode;
-    double total = 0;
-    double remainingEpisodes = 0;
-
-    public JikanGroupAdapter(int lastEpisode) {
-        this.lastEpisode = lastEpisode;
-        total = Math.floor(lastEpisode/100);
-        remainingEpisodes = total % 100;
-        if (remainingEpisodes != 0){
-            total += 1;
-        }
-    }
 
     @Override
     public JikanGroupAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,21 +22,14 @@ public class JikanGroupAdapter extends RecyclerView.Adapter<JikanGroupAdapter.Vi
 
     @Override
     public void onBindViewHolder(JikanGroupAdapter.ViewHolder holder, int position) {
-        if (position != (total - 1)){
             holder.jikanGroupTextView.setText(
-                    startEpisode + "-" + (startEpisode + 99)
+                    WanPisuConstants.jikanEpisodes.get(position)
             );
-        }else {
-            holder.jikanGroupTextView.setText(
-                    startEpisode + "-" + lastEpisode
-            );
-        }
-        startEpisode += 100;
     }
 
     @Override
     public int getItemCount() {
-        return (int)total;
+        return WanPisuConstants.jikanEpisodes.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
