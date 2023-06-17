@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import in.ghostreborn.wanpisu.JikanAsync;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
@@ -25,6 +26,10 @@ public class JikanGroupAdapter extends RecyclerView.Adapter<JikanGroupAdapter.Vi
             holder.jikanGroupTextView.setText(
                     WanPisuConstants.jikanEpisodes.get(position)
             );
+            holder.itemView.setOnClickListener(view -> {
+                WanPisuConstants.ALL_ANIME_EPISODE_ADD = position * 100;
+                new JikanAsync(holder.itemView.getContext(), position + 1).execute();
+            });
     }
 
     @Override

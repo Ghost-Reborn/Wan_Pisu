@@ -101,7 +101,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
                     WanPisuConstants.ALL_ANIME_SERVER_HEAD +
                             WanPisuConstants.wanPisuSharedPreference.getString(WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID, "") +
                             WanPisuConstants.ALL_ANIME_SERVER_MIDDLE +
-                            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER +
+                            (WanPisuConstants.ALL_ANIME_EPISODE_NUMBER + WanPisuConstants.ALL_ANIME_EPISODE_ADD) +
                             WanPisuConstants.ALL_ANIME_SERVER_TAIL
             );
         }

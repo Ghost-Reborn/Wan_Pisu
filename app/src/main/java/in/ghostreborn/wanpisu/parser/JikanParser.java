@@ -49,6 +49,8 @@ public class JikanParser {
         try {
             JSONObject jikanObject = new JSONObject(rawJSON);
             JSONArray dataArray = jikanObject.optJSONArray("data");
+            JSONObject paginationObject = jikanObject.optJSONObject("pagination");
+            WanPisuConstants.JIKAN_LAST_PAGE = paginationObject.getInt("last_visible_page");
 
             if (dataArray == null) {
                 WanPisuConstants.hasNoEpisodeData = true;
