@@ -59,6 +59,19 @@ public class JikanParser {
                 WanPisuConstants.hasNoEpisodeData = true;
             }
 
+            if (WanPisuConstants.hasNoEpisodeData) {
+                int totalEpisodes = WanPisuConstants.ALL_ANIME_TOTAL_EPISODES;
+                for (int i = 0; i < totalEpisodes; i++) {
+                    WanPisuConstants.jikans.add(new Jikan(
+                            "Episode " + (i + 1),
+                            "null",
+                            "null",
+                            false,
+                            false
+                    ));
+                }
+            }
+
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject dataObject = dataArray.getJSONObject(i);
                 String title = dataObject.getString("title");
