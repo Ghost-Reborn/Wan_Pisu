@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         initialSetup();
 
-        AllAnimeAsync animeAsync = new AllAnimeAsync();
+        AllAnimeAsync animeAsync = new AllAnimeAsync("");
         animeAsync.execute();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.menu_home:
                         animeSearchView.setVisibility(View.GONE);
-                        AllAnimeAsync animeAsync = new AllAnimeAsync();
+                        AllAnimeAsync animeAsync = new AllAnimeAsync("");
                         animeAsync.execute();
                         return true;
                     case R.id.menu_search:
@@ -58,6 +58,20 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_settings:
                         return true;
                 }
+                return false;
+            }
+        });
+
+        animeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                AllAnimeAsync animeAsync = new AllAnimeAsync(animeSearchView.getQuery().toString());
+                animeAsync.execute();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
                 return false;
             }
         });
@@ -74,9 +88,26 @@ public class MainActivity extends AppCompatActivity {
 
     class AllAnimeAsync extends AsyncTask<Void, Void, Void> {
 
+        String animeName;
+        public AllAnimeAsync(String animeName){
+            this.animeName = animeName;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            WanPisuConstants.allAnimes.clear();
+
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
-            AllAnimeParser.parseAllAnime(WanPisuConstants.ALL_ANIME_QUERY_HEAD + WanPisuConstants.ALL_ANIME_QUERY_TAIL);
+            AllAnimeParser.parseAllAnime(
+                    WanPisuConstants.ALL_ANIME_QUERY_HEAD +
+                            animeName +
+                            WanPisuConstants.ALL_ANIME_QUERY_TAIL
+            );
             return null;
         }
 

@@ -63,9 +63,12 @@ public class AllAnimeParser {
                 String type = animeObject.getString("__typename");
                 String malID = animeObject.getString("malId");
                 String animeThumbnail = animeObject.getString("thumbnail");
-                String lastEpisodeInfo = animeObject.optJSONObject("lastEpisodeInfo")
-                        .optJSONObject("sub")
-                        .getString("episodeString");
+                String lastEpisodeInfo = "null";
+                if (animeObject.optJSONObject("lastEpisodeInfo").has("sub")){
+                    lastEpisodeInfo = animeObject.optJSONObject("lastEpisodeInfo")
+                            .optJSONObject("sub")
+                            .getString("episodeString");
+                }
                 String lastEpisodeYear = animeObject.optJSONObject("lastEpisodeDate")
                         .optJSONObject("sub")
                         .getString("year");
