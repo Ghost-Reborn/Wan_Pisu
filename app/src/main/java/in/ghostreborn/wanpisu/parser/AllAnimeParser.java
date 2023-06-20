@@ -58,13 +58,14 @@ public class AllAnimeParser {
                 JSONObject animeObject = edgesArray.optJSONObject(i);
                 String animeID = animeObject.getString("_id");
                 String animeName = animeObject.getString("name");
+                String englishName = animeObject.getString("englishName");
                 String availableEpisodes = animeObject.optJSONObject("availableEpisodes")
                         .getString("sub");
                 String type = animeObject.getString("__typename");
                 String malID = animeObject.getString("malId");
                 String animeThumbnail = animeObject.getString("thumbnail");
                 String lastEpisodeInfo = "null";
-                if (animeObject.optJSONObject("lastEpisodeInfo").has("sub")){
+                if (animeObject.optJSONObject("lastEpisodeInfo").has("sub")) {
                     lastEpisodeInfo = animeObject.optJSONObject("lastEpisodeInfo")
                             .optJSONObject("sub")
                             .getString("episodeString");
@@ -77,6 +78,7 @@ public class AllAnimeParser {
                         new AllAnime(
                                 animeID,
                                 animeName,
+                                englishName,
                                 availableEpisodes,
                                 type,
                                 malID,
@@ -124,7 +126,7 @@ public class AllAnimeParser {
                     .optJSONObject("episode")
                     .getJSONArray("sourceUrls");
             for (int i = 0; i < sourceURLS.length(); i++) {
-                if (sourceURLS.get(i).toString().contains("workfields.backup-server")){
+                if (sourceURLS.get(i).toString().contains("workfields.backup-server")) {
                     JSONObject urlObject = sourceURLS.getJSONObject(i);
                     return urlObject.getString("sourceUrl");
                 }

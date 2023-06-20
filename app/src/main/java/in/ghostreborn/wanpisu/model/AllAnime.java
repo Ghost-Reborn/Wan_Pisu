@@ -4,6 +4,7 @@ public class AllAnime {
 
     String animeID;
     String animeName;
+    String englishName;
     String animeAvailableEpisodes;
     String animeType;
     String animeMalID;
@@ -14,6 +15,7 @@ public class AllAnime {
     public AllAnime(
             String animeID,
             String animeName,
+            String englishName,
             String animeAvailableEpisodes,
             String animeType,
             String animeMalID,
@@ -23,6 +25,7 @@ public class AllAnime {
     ){
         this.animeID = animeID;
         this.animeName = animeName;
+        this.englishName = englishName;
         this.animeAvailableEpisodes = animeAvailableEpisodes;
         this.animeType = animeType;
         this.animeMalID = animeMalID;
@@ -61,5 +64,9 @@ public class AllAnime {
 
     public String getAnimeType() {
         return animeType;
+    }
+
+    public String getEnglishName() {
+        return englishName;
     }
 }

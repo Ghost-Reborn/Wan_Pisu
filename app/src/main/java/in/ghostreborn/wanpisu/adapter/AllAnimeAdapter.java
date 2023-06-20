@@ -32,6 +32,10 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull AllAnimeAdapter.ViewHolder holder, int position) {
         holder.animeTextView.setText(WanPisuConstants.allAnimes.get(position).getAnimeName());
+        if (WanPisuConstants.allAnimes.get(position).getEnglishName() != "null") {
+            holder.animeTextView.setText(WanPisuConstants.allAnimes.get(position).getEnglishName());
+        }
+
         Picasso.get().load(WanPisuConstants.allAnimes.get(position).getAnimeThumbnail())
                 .into(holder.animeImageView);
         holder.itemView.setOnClickListener(view -> {
