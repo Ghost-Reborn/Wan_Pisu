@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             AllAnimeParser.parseAllAnime(
-                    "Naruto"
+                    animeName
             );
             return null;
         }
