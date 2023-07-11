@@ -104,9 +104,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             AllAnimeParser.parseAllAnime(
-                    WanPisuConstants.ALL_ANIME_QUERY_HEAD +
-                            animeName +
-                            WanPisuConstants.ALL_ANIME_QUERY_TAIL
+                    "Naruto"
             );
             return null;
         }
