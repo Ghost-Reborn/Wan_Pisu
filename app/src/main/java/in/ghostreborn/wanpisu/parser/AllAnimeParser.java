@@ -101,29 +101,68 @@ public class AllAnimeParser {
         }
     }
 
-    public static String getAllAnimeServer(String serverURL) {
-        try {
-            URL url = new URL(serverURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
+    public static String getAllAnimeServer(String showID) {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
+        String serverURL = "https://embed.ssbcontent.site/apivtwo/clock.json?id=" + decryptAllAnime(showID);
+        return serverURL;
+
+    }
+
+    private static String decryptAllAnime(String showID){
+
+        // Connect and get encrypted url
+
+        OkHttpClient client = new OkHttpClient();
+
+        String baseUrl = "https://api.allanime.day/api";
+        String queryUrl = baseUrl + "?variables=" +
+                Uri.encode("{\"showId\":\"" +
+                        showID +
+                        "\",\"translationType\":\"sub\",\"episodeString\":\"1\"}") +
+                "&query=" +
+                Uri.encode("query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}");
+
+        Request request = new Request.Builder()
+                .url(queryUrl)
+                .header("Referer", "https://allanime.to")
+                .header("Cipher", "AES256-SHA256")
+                .header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            String rawJSON =  response.body().string();
+            JSONObject jsonObject = new JSONObject(rawJSON);
+            JSONArray sourceURLs = jsonObject.getJSONObject("data")
+                    .getJSONObject("episode")
+                    .getJSONArray("sourceUrls");
+            String sourceURL = sourceURLs.getJSONObject(0).getString("sourceUrl").substring(2);
+
+            // Decrypt the encrypted url
+
+            StringBuilder decryptedString = new StringBuilder();
+
+            for (int i = 0; i < sourceURL.length(); i += 2) {
+                String hex = sourceURL.substring(i, i + 2);
+                int dec = Integer.parseInt(hex, 16);
+                int xor = dec ^ 48;
+                decryptedString.append((char) xor);
             }
 
-            return getBackupServer(response.toString());
+            String cutID = decryptedString.substring(18);
+            String cutReferer = cutID.substring(0, cutID.length() - 9);
 
-        } catch (MalformedURLException | ProtocolException e) {
-            e.printStackTrace();
+            Log.e("TAG", "Decrypted: " + cutReferer);
+            return cutReferer;
+
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             throw new RuntimeException(e);
         }
 
-        return "ERROR";
+        return "NULL";
+
     }
 
     private static String getBackupServer(String serverJSON) {

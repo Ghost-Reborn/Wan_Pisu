@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -98,11 +99,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             return AllAnimeParser.getAllAnimeServer(
-                    WanPisuConstants.ALL_ANIME_SERVER_HEAD +
-                            WanPisuConstants.wanPisuSharedPreference.getString(WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID, "") +
-                            WanPisuConstants.ALL_ANIME_SERVER_MIDDLE +
-                            (WanPisuConstants.ALL_ANIME_EPISODE_NUMBER + WanPisuConstants.ALL_ANIME_EPISODE_ADD) +
-                            WanPisuConstants.ALL_ANIME_SERVER_TAIL
+                            WanPisuConstants.wanPisuSharedPreference.getString(WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_ID, "")
             );
         }
 
@@ -110,9 +107,10 @@ public class ExoPlayerActivity extends AppCompatActivity {
         protected void onPostExecute(String server) {
             super.onPostExecute(server);
 
-            findViews();
+//            findViews();
+            Log.e("TAG", server);
             exoPlayerProgressBar.setVisibility(View.GONE);
-            initPlayer(server, ExoPlayerActivity.this);
+//            initPlayer(server, ExoPlayerActivity.this);
 
         }
     }
