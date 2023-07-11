@@ -23,7 +23,7 @@ public class WanPisuConstants {
     public static ArrayList<String> jikanEpisodes;
 
     public static boolean hasNoEpisodeData = false;
-    public static boolean isHLS = false;
+    public static boolean isHLS = true;
     public static int ALL_ANIME_POSITION = 0;
     public static int ALL_ANIME_EPISODE_NUMBER = 0;
     public static int ALL_ANIME_TOTAL_EPISODES = 0;

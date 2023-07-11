@@ -104,11 +104,34 @@ public class AllAnimeParser {
     public static String getAllAnimeServer(String showID) {
 
         String serverURL = "https://embed.ssbcontent.site/apivtwo/clock.json?id=" + decryptAllAnime(showID);
-        return serverURL;
 
+        try {
+            URL url = new URL(serverURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            JSONObject jsonObject = new JSONObject(String.valueOf(response));
+            JSONArray links = jsonObject.getJSONArray("links");
+            JSONObject linkObject = links.getJSONObject(0);
+            String link = linkObject.getString("link");
+            WanPisuConstants.isHLS = linkObject.getBoolean("hls");
+
+            return link;
+
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private static String decryptAllAnime(String showID){
+        private static String decryptAllAnime(String showID){
 
         // Connect and get encrypted url
 

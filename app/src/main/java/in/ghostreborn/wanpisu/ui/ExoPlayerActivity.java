@@ -107,10 +107,10 @@ public class ExoPlayerActivity extends AppCompatActivity {
         protected void onPostExecute(String server) {
             super.onPostExecute(server);
 
-//            findViews();
+            findViews();
             Log.e("TAG", server);
             exoPlayerProgressBar.setVisibility(View.GONE);
-//            initPlayer(server, ExoPlayerActivity.this);
+            initPlayer(server, ExoPlayerActivity.this);
 
         }
     }
