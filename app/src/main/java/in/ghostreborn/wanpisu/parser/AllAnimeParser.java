@@ -199,25 +199,4 @@ public class AllAnimeParser {
         return decryptedString.toString();
     }
 
-    private static String getBackupServer(String serverJSON) {
-        try {
-            JSONObject baseJSON = new JSONObject(serverJSON);
-            JSONArray sourceURLS = baseJSON
-                    .optJSONObject("data")
-                    .optJSONObject("episode")
-                    .getJSONArray("sourceUrls");
-            for (int i = 0; i < sourceURLS.length(); i++) {
-                if (sourceURLS.get(i).toString().contains("workfields.backup-server")) {
-                    JSONObject urlObject = sourceURLS.getJSONObject(i);
-                    return urlObject.getString("sourceUrl");
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return "ERROR";
-
-    }
-
 }
