@@ -131,7 +131,7 @@ public class AllAnimeParser {
         }
     }
 
-        private static String decryptAllAnime(String showID){
+    private static String decryptAllAnime(String showID) {
 
         // Connect and get encrypted url
 
@@ -154,31 +154,25 @@ public class AllAnimeParser {
 
         try {
             Response response = client.newCall(request).execute();
-            String rawJSON =  response.body().string();
+            String rawJSON = response.body().string();
             JSONObject jsonObject = new JSONObject(rawJSON);
             JSONArray sourceURLs = jsonObject.getJSONObject("data")
                     .getJSONObject("episode")
                     .getJSONArray("sourceUrls");
-            String sourceURL = sourceURLs.getJSONObject(0).getString("sourceUrl").substring(2);
+            String decrypted;
 
-            // Decrypt the encrypted url
-
-            StringBuilder decryptedString = new StringBuilder();
-
-            for (int i = 0; i < sourceURL.length(); i += 2) {
-                String hex = sourceURL.substring(i, i + 2);
-                int dec = Integer.parseInt(hex, 16);
-                int xor = dec ^ 56;
-                String oct = String.format("%03o", xor);
-                char decryptedChar = (char) Integer.parseInt(oct, 8);
-                decryptedString.append(decryptedChar);
+            for (int i = 0; i < sourceURLs.length(); i++) {
+                decrypted = decryptAllAnimeServer(
+                        sourceURLs.getJSONObject(i).getString("sourceUrl").substring(2)
+                );
+                if (decrypted.contains("apivtwo")){
+                    decrypted = decrypted.substring(18);
+                    Log.e("TAG", "Decrypted: " + decrypted);
+                    return decrypted;
+                }
             }
 
-            String cutID = decryptedString.substring(18);
-            String cutReferer = cutID.substring(0, cutID.length() - 9);
-
-            Log.e("TAG", "Decrypted: " + cutReferer);
-            return cutReferer;
+            return "NULL";
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -188,6 +182,21 @@ public class AllAnimeParser {
 
         return "NULL";
 
+    }
+
+    private static String decryptAllAnimeServer(String decrypt) {
+        StringBuilder decryptedString = new StringBuilder();
+
+        for (int i = 0; i < decrypt.length(); i += 2) {
+            String hex = decrypt.substring(i, i + 2);
+            int dec = Integer.parseInt(hex, 16);
+            int xor = dec ^ 56;
+            String oct = String.format("%03o", xor);
+            char decryptedChar = (char) Integer.parseInt(oct, 8);
+            decryptedString.append(decryptedChar);
+        }
+
+        return decryptedString.toString();
     }
 
     private static String getBackupServer(String serverJSON) {
