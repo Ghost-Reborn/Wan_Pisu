@@ -168,8 +168,10 @@ public class AllAnimeParser {
             for (int i = 0; i < sourceURL.length(); i += 2) {
                 String hex = sourceURL.substring(i, i + 2);
                 int dec = Integer.parseInt(hex, 16);
-                int xor = dec ^ 48;
-                decryptedString.append((char) xor);
+                int xor = dec ^ 56;
+                String oct = String.format("%03o", xor);
+                char decryptedChar = (char) Integer.parseInt(oct, 8);
+                decryptedString.append(decryptedChar);
             }
 
             String cutID = decryptedString.substring(18);
