@@ -104,6 +104,7 @@ public class AllAnimeParser {
     public static String getAllAnimeServer(String showID) {
 
         String serverURL = "https://embed.ssbcontent.site/apivtwo/clock.json?id=" + decryptAllAnime(showID);
+        Log.e("TAG", serverURL);
 
         try {
             URL url = new URL(serverURL);
@@ -122,7 +123,13 @@ public class AllAnimeParser {
             JSONArray links = jsonObject.getJSONArray("links");
             JSONObject linkObject = links.getJSONObject(0);
             String link = linkObject.getString("link");
-            WanPisuConstants.isHLS = linkObject.getBoolean("hls");
+
+            if (linkObject.has("mp4")){
+                WanPisuConstants.isHLS = !linkObject.getBoolean("mp4");
+            }else {
+                // TODO check HLS key exists in response
+                WanPisuConstants.isHLS = true;
+            }
 
             return link;
 
@@ -159,10 +166,9 @@ public class AllAnimeParser {
             JSONArray sourceURLs = jsonObject.getJSONObject("data")
                     .getJSONObject("episode")
                     .getJSONArray("sourceUrls");
-            String decrypted;
 
             for (int i = 0; i < sourceURLs.length(); i++) {
-                decrypted = decryptAllAnimeServer(
+                String decrypted = decryptAllAnimeServer(
                         sourceURLs.getJSONObject(i).getString("sourceUrl").substring(2)
                 );
                 if (decrypted.contains("apivtwo")){
