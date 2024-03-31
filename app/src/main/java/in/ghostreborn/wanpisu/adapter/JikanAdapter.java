@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.JikanDownloadAsync;
 import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
@@ -53,6 +55,14 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
 
         });
 
+        holder.jikanDownloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = position + 1;
+                new JikanDownloadAsync(view.getContext()).execute();
+            }
+        });
+
     }
 
     @Override
@@ -68,6 +78,7 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
         public TextView jikanAnimeFiller;
         public TextView jikanAnimeRecap;
         public ImageView jikanAnimeImage;
+        public Button jikanDownloadButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,6 +88,7 @@ public class JikanAdapter extends RecyclerView.Adapter<JikanAdapter.ViewHolder> 
             jikanAnimeFiller = itemView.findViewById(R.id.jikan_anime_filler);
             jikanAnimeRecap = itemView.findViewById(R.id.jikan_anime_recap);
             jikanAnimeImage = itemView.findViewById(R.id.jikan_anime_image);
+            jikanDownloadButton = itemView.findViewById(R.id.jikan_download_button);
         }
     }
 }
