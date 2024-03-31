@@ -47,6 +47,10 @@ public class AllAnimeAdapter extends RecyclerView.Adapter<AllAnimeAdapter.ViewHo
                             WanPisuConstants.allAnimes.get(position).getAnimeID()
                     )
                     .putString(
+                            WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_NAME,
+                            WanPisuConstants.allAnimes.get(position).getAnimeName()
+                    )
+                    .putString(
                             WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_MAL_ID,
                             WanPisuConstants.allAnimes.get(position).getAnimeMalID()
                     )

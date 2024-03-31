@@ -30,8 +30,12 @@ public class JikanDownloadAsync extends AsyncTask<Void, Void, String> {
 
         Log.e("TAG", "Url: " + s);
 
-        // TODO get filename
-        String fileName = "";
+
+        String fileName =
+                WanPisuConstants.wanPisuSharedPreference.getString(WanPisuConstants.WAN_PISU_PREFERENCE_ANIME_NAME, "") +
+                        " " +
+                        WanPisuConstants.ALL_ANIME_EPISODE_NUMBER +
+                ".mp4";
 
         DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(s));
